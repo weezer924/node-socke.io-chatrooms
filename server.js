@@ -1,9 +1,9 @@
-const http = require('http')
-const fs = require('fs')
-const path = require('path')
-const mime = require('mime')
+var http = require('http')
+var fs = require('fs')
+var path = require('path')
+var mime = require('mime')
 
-const cache = {}
+var cache = {}
 
 function send404(res) {
   res.writeHead(404, {'Content-Type': 'text/plain'})
@@ -39,7 +39,7 @@ function serveStatic(res, cache, absPath) {
   }
 }
 
-const server = http.createServer(function(req, res) {
+var server = http.createServer(function(req, res) {
   let filePath = false;
   if (req.url == '/') {
     filePath = 'public/index.html'
@@ -47,7 +47,7 @@ const server = http.createServer(function(req, res) {
     filePath = 'public' + req.url
   }
 
-  const absPath = './' + filePath
+  var absPath = './' + filePath
   serveStatic(res, cache, absPath)
 })
 
@@ -55,5 +55,5 @@ server.listen(3000, function() {
   console.log("Server listiong on port 3000")
 })
 
-const chatServer = require('./lib/chat_server')
+var chatServer = require('./lib/chat_server')
 chatServer.listen(server)

@@ -7,8 +7,8 @@ function divSystemContentElement(message) {
 }
 
 function processUserInput(chatApp, socket) {
-  const message = $('#send-message').val()
-  const systemMessage
+  var message = $('#send-message').val()
+  var systemMessage
   if (message.charAt(0) == '/') {
     systemMessage = chatApp.processCommand(message)
     if (systemMessage) {
@@ -17,17 +17,17 @@ function processUserInput(chatApp, socket) {
   } else {
     chatApp.sendMessage($('#room').text(), message)
 
-    $('#message').append(divEscapedContentElement(message))
-    $('#message').scrollTop($('#message').prop('scrollHeight'))
+    $('#messages').append(divEscapedContentElement(message))
+    $('#messages').scrollTop($('#messages').prop('scrollHeight'))
   }
 
   $('#send-message').val('')
 }
 
-const socket = io.connect()
+var socket = io.connect()
 
 $(document).ready(function() {
-  const chatApp = new Chat(socket)
+  var chatApp = new Chat(socket)
   socket.on('nameResult', function(result) {
     let message
     if (result.success) {
@@ -44,7 +44,7 @@ $(document).ready(function() {
   })
 
   socket.on('message', function(message) {
-    const newElement = $('<div></div>').text(message.text)
+    var newElement = $('<div></div>').text(message.text)
     $('#messages').append(newElement)
   })
 
